@@ -1,9 +1,9 @@
+# a character generator that rolls most of the random tables in character creation, for the game Miseries and Misfortunes by Luke Crane
+# generator by Colin Ferrie 2022 
+
 import random
-
- 
-
- 
-
+#this is a fuction that rolls n-sided die(dice) n-rolls and totals the result of the rolls
+#example  roll_d(6,2) would most likely result in 6,7,8 but it should be possible to get 2-12 as a result
 def roll_d(side, rolls):
 
     roll_result = 0
@@ -14,37 +14,25 @@ def roll_d(side, rolls):
 
         roll_result = roll_result + roll
 
- 
-
     return int(roll_result)
 
-#EXAMPLE
-# print (d_sum(roll_d(6,5)))
-# will roll a 6 sided die 5 times and sum the results
- 
-#obligations are a game stat 
+
+#obligations are a game stat and we define a value of 0 for now
 obligations = 0
 
-
+# roll 3 6 sided die, get qality of birth, income_source, update obligations
 quality_birth = roll_d(6, 3)
-
-# roll 3d6, get qality of birth, income_source, update obligations
-
 # uncomment to test
-
 # quality_birth=17
 
- 
-
 income_source = (roll_d(6, 1))
+# type(income_source)
+# print (income_source)
 
-# roll a die and you get this as a list::shrugs:: so we fix that
-
-# so we make this index
-
+# we need to reduce the result 1-6 to 0-5 to easily refrence in income list 
 income_index = (income_source) - 1
 
-  
+
 
 if quality_birth in [3, 4, 5]:
 
@@ -52,12 +40,17 @@ if quality_birth in [3, 4, 5]:
 
     quality_birth = 'Marginaux: Actor, prostitute, urchin, soldier, filou, sailor'
 
-    income_list = ['none', 'none', 'none', 'Labor', 'Sale Boulot', 'Sale Boulot']
+    income_list = ['None', 'None', 'None', 'Labor', 'Sale Boulot', 'Sale Boulot']
 
-    income_source = income_list[income_index]
+    income_source = income_list[income_index]  
 
-#lowercase incomelist word NONE caused issue
 
+
+#if quality_birth in [3, 4, 5]:
+#    obligations = obligations + 2
+#    quality_birth = 'Marginaux: Actor, prostitute, urchin, soldier, filou, sailor'
+#    income_list = ['None', 'None', 'None', 'Labor', 'Sale Boulot', 'Sale Boulot']
+#    income_source = income_list[income_index]
  
 
 elif quality_birth in [6, 7, 8, 9, 10]:
@@ -90,11 +83,10 @@ elif quality_birth == 14:
 
     quality_birth = 'Artisan: Smith, carpenter, clothier, mason, plumber, clock maker'
 
-    income_list = ['Labor', 'Labor', 'Labor',
-
-                   'Business', 'Business', 'Business']
+    income_list = ['Labor', 'Labor', 'Labor', 'Business', 'Business', 'Business']
 
     income_source = income_list[income_index]
+
 
 elif quality_birth == 15:
 
@@ -102,9 +94,7 @@ elif quality_birth == 15:
 
     quality_birth = 'Bourgeoisie: Merchant, financier, architect, famous artist'
 
-    income_list = ['Auction', 'Business', 'Business',
-
-                   'Business', 'Logeur', 'Usury & Zinskauf(land renting)']
+    income_list = ['Auction', 'Business', 'Business', 'Business', 'Logeur', 'Usury & Zinskauf']
 
     income_source = income_list[income_index]
 
@@ -114,7 +104,7 @@ elif quality_birth == 16:
 
     obligations = obligations + 1
 
-    quality_birth = 'Noblesse d’épée sans titre: Écuyer, chevalier, dame, gentilhomme'
+    quality_birth = 'Noblesse d’épée sans titre(Noble without Title): Écuyer, chevalier, dame, gentilhomme'
 
     income_list = ['None', 'None', 'None', 'None', 'Charge', 'Benefice']
 
@@ -130,11 +120,9 @@ elif quality_birth == 18:
 
     #oblgations + 0
 
-    quality_birth = 'Noblesse d’épée avec titre: Sieur, seigneur, baron, vicomte, comte, marquis'
+    quality_birth = 'Noblesse d’épée avec titre(Noble of the Sword with title): Sieur, seigneur, baron, vicomte, comte, marquis'
 
-    income_list = ['None', 'Charge', 'Logeur',
-
-                   'Logeur', 'Benefice', 'Taxation']
+    income_list = ['None', 'Charge', 'Logeur', 'Logeur', 'Benefice', 'Taxation']
 
     income_source = income_list[income_index]
 
@@ -146,7 +134,7 @@ else:
 
     obligations = obligations + 2
 
-    quality_birth = 'Noblesse de robe: Minister, judge, intendant'
+    quality_birth = 'Noblesse de robe(Noble of the Robe): Minister, judge, intendant'
 
     income_list = ['None', 'None', 'None', 'None', 'Logeur', 'Benefice']
 
@@ -161,13 +149,9 @@ else:
 property_type = 0
 
 # roll 1d6 based on income_source
-
 # broken somwhere here V below
 
- 
-
 property_type = roll_d(6, 1)
-
  
 
 if income_source == 'None':
@@ -922,7 +906,7 @@ elif political_roll == 11 :
 
 else:
 
-    # 12
+    # roll must have been 12
 
     political='Politically ignorant, rating 1/6'
 
@@ -986,7 +970,7 @@ else:
 
     print("your wealth comes from " + str(income_source))
 
-print("you make your home in a " + (property_type) +
+print("Home for you is " + (property_type) +
 
       " and that has an Asset Value of " + str(asset_value))
 
@@ -994,7 +978,7 @@ print("you make your home in a " + (property_type) +
 
 print('your Wealth Rating is ' + wealth_rating + " and Income in Livres is " +
 
-      income_livres + " which means your Social Strata is " + social_strata)
+      income_livres + " which means Social Strata is " + social_strata)
 
  
 
