@@ -1,20 +1,7 @@
 # a character generator that rolls most of the random tables in character creation, for the game Miseries and Misfortunes by Luke Crane
 # generator by Colin Ferrie 2022 
 
-import random
-#this is a fuction that rolls n-sided die(dice) n-rolls and totals the result of the rolls
-#example  roll_d(6,2) would most likely result in 6,7,8 but it should be possible to get 2-12 as a result
-def roll_d(side, rolls):
-
-    roll_result = 0
-
-    for _ in range(rolls):
-
-        roll = random.randint(1, side)
-
-        roll_result = roll_result + roll
-
-    return int(roll_result)
+from dieSideRoller import roll_d
 
 
 #obligations are a game stat and we define a value of 0 for now
