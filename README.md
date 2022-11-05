@@ -15,3 +15,17 @@ The character sheets can be found at https://www.burningwheel.com/miseries-misfo
 python mAndM.py
 ```
     
+## To Do
+-File I/O
+    -imput from text file
+    -output to text file (likely character details)
+
+-User input
+    -more detail on whats going on while the script runs
+
+-GitHub Intgration
+    -Done
+
+-Imported Modules
+    -Done
+    
