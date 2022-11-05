@@ -23,9 +23,8 @@ python mAndM.py
 -User input
     -more detail on whats going on while the script runs
 
--GitHub Intgration
+###GitHub Intgration
     -Done
 
--Imported Modules
+###Imported Modules
     -Done
-    

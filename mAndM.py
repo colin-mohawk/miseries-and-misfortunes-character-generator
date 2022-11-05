@@ -2,18 +2,17 @@
 # generator by Colin Ferrie 2022 
 
 from dieSideRoller import roll_d
+import sys
 
-print("Bonjour, you are about to create a character for Miseries and Misfortunes RPG. You should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux")
-print("Following the book, Motif should already be established avec tes amis(with your freinds)")
+print("Bonjour, you are about to create a character for Miseries and Misfortunes RPG. You should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your freinds)\n")
 
 #obligations are a game stat and we define a value of 0 for now since thats where you start 
 obligations = 0
 
 # roll 3 6 sided die, get qality of birth, income_source, update obligations
 quality_birth = roll_d(6, 3)
-# uncomment to test 17 which is rare but important 
-# quality_birth=17
 
+#roll 1 6 sided die for income sources
 income_source = (roll_d(6, 1))
 # type(income_source)
 # print (income_source)
@@ -186,8 +185,6 @@ elif property_type == 'Castle':
     income_modifier = income_modifier + int(2)
     asset_value = roll_d(10, 1)
 
- 
-
 elif property_type == 'Castle':
     obligations = obligations + 10
     income_modifier = income_modifier + int(1)
@@ -203,7 +200,10 @@ social_strata = 0
 # based on wealth rating
 
 # figure out our wealth rating
-
+# this section could be converted to classes but im not sure
+#h ow i would utlize them or it could be a nested dictonary
+# I might be able to implement File I/O here 
+#  
 if income_total == 13:
     wealth_rating = '99/100'
     income_livres = '₶ 1,000,000,000s'
@@ -279,9 +279,9 @@ else:
 lifestyle_choice = ""
 # this updates oblgations you get to choose this
 
-###############################################
+#############################################################################################################################################
 # User Input 
-###############################################
+#############################################################################################################################################
 
 while True:
     lifestyle_choice = input("How do you live your life? \n0)Natural \n1)Bread Alone Obligations +1 \n2)Respectable Obligations +2 \n3)Fashionable Obligations +3\n4)Lavish Oblgations +5\n\n")
@@ -328,20 +328,24 @@ dependants_all = []
 dependent_lifestyle_roll= 'none'
 
 dependent_lifestyle_choice='Natural'
+##############################
+#Dependants require a complex nesting list
+#######
+
 
 if dependents >= 1:
     dependents_index = 0
     for i in range (0,dependents):
-        dependent_list=['Child','Younger cousin','Nephew','Niece','Younger sister','Younger brother','Sickly childhood friend','Spouse','Older cousin','Elder brother','Elder sister','Impecunious lover','Infirm father','Dying mentor','Infirm mother','Widower infirm uncle','Widowed infirm aunt','Infirm grandfather','Infirm grandmother','Drunk uncle or aunt']
-        relationship_sub=roll_d(6,1) -1
-        relationship_table=['Blood','Blood','Blood','In-law','In-law','Filial or adopted']
-        deps_add= str( (dependent_list[dependents_index])+" by "+(relationship_table[relationship_sub]) )
+        dependent_list=['child','younger cousin','nephew','niece','younger sister','younger brother','sickly childhood friend','spouse','older cousin','elder brother','elder sister','impecunious lover','infirm father','dying mentor','infirm mother','widower infirm uncle','widowed infirm aunt','infirm grandfather','infirm grandmother','drunk uncle or aunt']
+        relationship_sub=roll_d(6,1) -1 # minus one for indexing correctly
+        relationship_table=['blood','blood','blood','in-law','in-law','filial or adopted']
+        deps_add= str( (dependent_list[dependents_index])+" related to you by "+(relationship_table[relationship_sub]) )
         dependants_all.append(deps_add)
         dependents_index +=1
 else:
     dependants_all="no one, you lucky devil!"
 
-lifestyle_dependents = "Natural"
+lifestyle_dependents = "error dependants lifestyle"
 
 # random 2d6 or match your choice
 # adds to oblgation only once same for all depedants
@@ -372,7 +376,7 @@ if dependents >= 1:
         obligations = obligations + 5
     else:
                 # lifestyle is Natural
-                dependent_lifestyle_choice ='Natural'
+        dependent_lifestyle_choice ='Natural'
 
 else:       
     pass
@@ -427,9 +431,11 @@ elif relgion_roll == 8  or relgion_roll == 9 or relgion_roll == 10 or relgion_ro
 else:
     #12   
     relgion = 'Jewish, rating 1/6'
+#more variables!
 political='null politic'
+# 2d6 for king or other
 political_roll = roll_d(6,2)
-# 2d6 for king
+
 if political_roll == 2:
     political='Cardinalist, rating 1/6'
 elif political_roll == 3 or political_roll == 4 :
@@ -452,45 +458,50 @@ Wisdom = roll_d(6,3)
 Dexterity = roll_d(6,3)
 Constitution = roll_d(6,3)
 Chrisma = roll_d(6,3)
+#no roll for language 
 language = 'French, rating 3/6'
-print("\n\nYou were born to the caste of " + quality_birth)
 
+#############################################################
 #output 
+#############################################################
+
+print("\n\nYou were born to the caste of " + quality_birth)
 if quality_birth == 'Noblesse de robe: Minister, judge, intendant':
-    print("Your Wealth comes from " + str(income_source) +
-          " and " + str(income_source_2))
+    print("Your Wealth comes from " + str(income_source) + " and " + str(income_source_2))
 else:
     print("Your Wealth comes from " + str(income_source))
-print("Home for you is " + (property_type) +
-      " which has an Asset Value of " + str(asset_value))
-print('Wealth Rating is ' + wealth_rating + " and Income in Livres is " +
-      income_livres + "\nThe Social Strata or you those you can be seen pressing hands with " + social_strata)
-print('You chose to live in the ' + lifestyle_choice + " Lifestyle")
+print("Home for you is " + (property_type) + " which has an Asset Value of " + str(asset_value) + '\nWealth Rating is ' + wealth_rating + " and Income in Livres is " +
+      income_livres + "\nYour Social Strata, those you may be seen pressing hands with; " + social_strata +'\nYou chose to live in the ' + lifestyle_choice + " Lifestyle")
 if dependents == 0:
     print ("Your Dependants include; " + str(dependants_all))
 else:
     print ("Your Dependants include; " + str(dependants_all)[1:-1] + " and they live a " + str(dependent_lifestyle_choice ) +" lifestyle.")
-
-#print ("your Dependants include; " + str(dependants_all)[1:-1] + " and they live a " + str(dependent_lifestyle_choice ) +" lifestyle.")
-#may need to alter dependants section
-
 if weath_rating_debt != 0:
     print ('and you are owed a debt, your debitor has a wealth rating of ' + str(weath_rating_debt))   
 else:
     print ("and " + debts)
+print("You have " + str(total_obligations) + " total Obligations"+ "\nYour Language is " + language +"\nYour Nationality is " + nationality + '\nYour Religious Affiliation is '+ str(relgion) +'\nYour Political Affiliation is ' + political +'\nSTATS \n'  + str(Strength) + '\tStrength \n' + str(Intelligence) + '\tIntelligence \n' + str(Wisdom) + '\tWisdom \n' + str(Dexterity) + '\tDexterity \n'+ str(Constitution) +'\tConstitution \n'+ str(Chrisma) + '\tChrisma \n')
 
-print("you have " + str(total_obligations) + " total obligations")
-print("Your Language is " + language +" and are Nationality " + nationality )
-print ('Your Religious Affiliation is '+ str(relgion) +' and Political Affiliation is ' + political)
-
-print ('STATS \n'  + str(Strength) + '\tStrength \n'
-
-      + str(Intelligence) + '\tIntelligence \n'
-
-      + str(Wisdom) + '\tWisdom \n'
-
-      + str(Dexterity) + '\tDexterity \n'
-
-      + str(Constitution) +'\tConstitution \n'
-
-      + str(Chrisma) + '\tChrisma \n'       )
+#############################################################
+#output to file
+#############################################################
+with open('MyCharacter.txt', "w", encoding="utf-8") as f:
+    print("Below find all the details required to continue bulding your Miseries and Misfortunes character", file=f)
+    print("\nQuality of birth\t" + quality_birth, file=f)
+    if quality_birth == 'Noblesse de robe: Minister, judge, intendant':
+        print("Wealth Income Source \t" + str(income_source) + " & " + str(income_source_2), file=f)
+    else:
+        print("Wealth Income Source \t" + str(income_source), file=f)
+    print("Home \t" + (property_type) + "\tAsset Value\t" + str(asset_value) + '\nWealth Rating\t' + wealth_rating + "\nIncome in Livres\t" +
+        income_livres + "\nSocial Strata\t" + social_strata +'\nLifestyle\t' + lifestyle_choice, file=f)
+    if dependents == 0:
+        print ("Dependants"+"none", file=f)
+    else:
+        print ("Dependants\t" + str(dependants_all)[1:-1] + "\nDependants Lifestyle\t" + str(dependent_lifestyle_choice ), file=f)
+    if weath_rating_debt != 0:
+        print ('Debt Owed to you\t' + str(weath_rating_debt), file=f)   
+    else:
+        print ("Debt\t " + debts)
+    print("Obligations\t" + str(total_obligations) + "\nLanguage\t" + language +"\nNationality \t" + nationality + '\nReligious Affiliation\t'+ str(relgion) +'\nPolitical Affiliation \t' + political +'\nSTATS \n'  + str(Strength) + '\tStrength \n' + str(Intelligence) + '\tIntelligence \n' + str(Wisdom) + '\tWisdom \n' + str(Dexterity) + '\tDexterity \n'+ str(Constitution) +'\tConstitution \n'+ str(Chrisma) + '\tChrisma \n', file=f)
+    
+    

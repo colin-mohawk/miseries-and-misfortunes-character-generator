@@ -1,2 +1,0 @@
-'Marginaux: Actor, prostitute, urchin, soldier, filou, sailor'
-'None', 'None', 'None', 'Labor', 'Sale Boulot', 'Sale Boulot'
