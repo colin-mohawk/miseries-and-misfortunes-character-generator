@@ -17,14 +17,14 @@ python mAndM.py
     
 ## To Do
 -File I/O
-    -imput from text file
-    -output to text file (likely character details)
+    -input from text file
+    -output to text file character details
 
 -User input
     -more detail on whats going on while the script runs
 
-###GitHub Intgration
+-GitHub Intgration
     -Done
 
-###Imported Modules
+-Imported Modules
     -Done
