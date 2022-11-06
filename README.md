@@ -18,13 +18,14 @@ python mAndM.py
 ## To Do
 - File I/O
     - Done
-
+- error detection
+    - Done
+- CLI user input with parameters
+    -done
 - User input
     - Done
-
 - GitHub Integration
     - Done
-
 - Imported Modules
     - Done
 
@@ -32,6 +33,5 @@ python mAndM.py
 - update file output so it writes a new filename each time 
 - follow the example of income to add flexibility to the script 
 - implement alternative output like partially filled character sheet, or a formatted 
-
-## x
- 
+- simplify code
+- show dice rolls
