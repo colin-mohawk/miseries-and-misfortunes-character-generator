@@ -16,14 +16,22 @@ python mAndM.py
 ```
     
 ## To Do
--File I/O
-    -Done
+- File I/O
+    - Done
 
--User input
-    -Done
+- User input
+    - Done
 
--GitHub Integration
-    -Done
+- GitHub Integration
+    - Done
 
--Imported Modules
-    -Done
+- Imported Modules
+    - Done
+
+### Future
+- update file output so it writes a new filename each time 
+- follow the example of income to add flexibility to the script 
+- implement alternative output like partially filled character sheet, or a formatted 
+
+## x
+ 
