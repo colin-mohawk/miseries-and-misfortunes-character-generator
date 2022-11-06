@@ -21,7 +21,7 @@ python mAndM.py
 - error detection
     - Done
 - CLI user input with parameters
-    -done
+    - Done
 - User input
     - Done
 - GitHub Integration
@@ -30,8 +30,10 @@ python mAndM.py
     - Done
 
 ### Future
+- add option to show dice rolls
 - update file output so it writes a new filename each time 
 - follow the example of income to add flexibility to the script 
-- implement alternative output like partially filled character sheet, or a formatted 
+- implement alternative output like partially filled character sheet
 - simplify code
-- show dice rolls
+- add more roles
+- research 
