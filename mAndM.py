@@ -2,14 +2,13 @@
 # generator by Colin Ferrie 2022 
 
 from dieSideRoller import roll_d
-import sys
 
-print("Bonjour, you are about to create a character for Miseries and Misfortunes RPG. You should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your freinds)\nWe will roll some dice on the tables and provide you with the reuslts\nThis covers the Birth and Wealth Section to the start of Determine Languages section, continue with the rules in the book to complete character creation\nOnce you run this there will be a file MyCaracter.txt created, it will be replaced if you run this script again without copying it somewhere safe\n")
+print("Bonjour, you are about to create a character for Miseries and Misfortunes RPG.\nYou should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your Friends)\nWe will roll some dice on the tables and provide you with the results\nThis covers the Birth and Wealth Section to the start of Determine Languages section.\nYou will continue with the book to complete character creation\nOnce you run this there will be a file MyCharacter.txt created, it will be replaced if you run this script again without copying it somewhere safe\n")
 
 #obligations are a game stat and we define a value of 0 for now since thats where you start 
 obligations = 0
 
-# roll 3 6 sided die, get qality of birth, income_source, update obligations
+# roll 3 6 sided die, get quality of birth, income_source, update obligations
 quality_birth = roll_d(6, 3)
 
 #roll 1 6 sided die for income sources
@@ -17,8 +16,8 @@ income_source = (roll_d(6, 1))
 # type(income_source)
 # print (income_source)
 
-# income index is use to selct our randmoized income sourse based on the quality of birth roll
-# we need to reduce the result 1-6 to 0-5 to easily refrence in income list since our list starts at 0 
+# income index is use to select our randomized income source based on the quality of birth roll
+# we need to reduce the result 1-6 to 0-5 to easily referenced in income list since our list starts at 0 
 income_index = (income_source) - 1
 
 if quality_birth in [3, 4, 5]:
@@ -58,14 +57,14 @@ elif quality_birth == 16:
     income_source = income_list[income_index]
 
 elif quality_birth == 18:
-    #oblgations = obligations + 0 #no additonaloblgations
+    #obligations = obligations + 0 #no additional obligations
     quality_birth = 'Noblesse d’épée avec titre(Noble of the Sword with title): Sieur, seigneur, baron, vicomte, comte, marquis'
     income_list = ['None', 'Charge', 'Logeur', 'Logeur', 'Benefice', 'Taxation']
     income_source = income_list[income_index]
  
 else:
     # quality_birth == 17
-    # this quality of birth has a special income sourse and potentail for a second one we added income_source_2 to deal with it
+    # this quality of birth has a special income source and possible second one we added income_source_2 to deal with it
     obligations = obligations + 2
     quality_birth = 'Noblesse de robe(Noble of the Robe): Minister, judge, intendant'
     income_list = ['None', 'None', 'None', 'None', 'Logeur', 'Benefice']
@@ -128,13 +127,15 @@ else:
 
 # convert the rolled value property_type to an index value starting at 0 thus the -1 again
 property_type = property_list[(property_type) - 1]
- 
-##### property_details ######### we figure out the values of your propery oblgation changes and income modfiers based on property here 
+
+
+##### property_details ######### 
+# we figure out the values of your property obligation changes and income modifiers based on property here 
 # create Income Modifier, and asset Value
 income_modifier = 0
 asset_value = 0
 
-#some errors where happening when income_modifier was added to a number but setting them expecility as intagers has fixed it
+#some errors where happening when income_modifier was added to a number but setting them  integers has fixed it
 if property_type == 'Homeless':
     obligations = obligations + 0
     income_modifier = income_modifier + int(-1)
@@ -190,20 +191,29 @@ elif property_type == 'Castle':
     income_modifier = income_modifier + int(1)
     asset_value = roll_d(10, 1)
 
+
+
+#income total is calculated by adding these values 
 income_total = income_range + income_modifier
+
+
+#to fix an issue with property type homeless providing a -1 as a result 
+income_true_total = income_total
+if income_total < 0:
+    income_total = 0
 
 #define a few more values
 wealth_rating = 0
 # wealth_rating= some value from chart
 income_livres = 0
-social_strata = 0
+social_strata = "null Place"
 # based on wealth rating
 
 #########################this section resolves your wealth rating ####################################
 # File I/O - file input 
 ####################################
 
-# we open income.txt to import values into a dictonary with nested dictonarys 
+# we open income.txt to import values into a dictionary with nested dictionaries 
 with open('income.txt', encoding="utf-8") as f:
     income_dict={}
     for line in f.readlines():
@@ -215,98 +225,23 @@ with open('income.txt', encoding="utf-8") as f:
 
         income_dict[income_tot] = {"income_total":income_tot, "wealth_rating":wealth_rat,"income_livres":income_liv,"social_srata":social_str}
 
-# now we are extracting the values calcuated from Income
+# now we are extracting the values calculated from Income_total
 income_results = income_dict[str(income_total)]
-income_total = income_results["income_total"]
-wealth_rating = income_results["wealth_rating"]
-income_livres = income_results["income_livres"]
-social_srata = income_results["social_srata"]
-
-#pervious version 
-''' 
-if income_total == 13:
-    wealth_rating = '99/100'
-    income_livres = '₶ 1,000,000,000s'
-    social_strata = 'VOC you may know them as "United East India Company"'
-
-elif income_total == 12:
-    wealth_rating = '98/100'
-    income_livres = '₶ 100,000,000s'
-    social_strata = 'The State'
-
-elif income_total == 11:
-    wealth_rating = '97/100'
-    income_livres = '₶ 50,000,000s'
-    social_strata = 'M. Le Cardinal'
-
-elif income_total == 10:
-    wealth_rating = '96/100'
-    income_livres = '₶ 10,000,000s'
-    social_strata = 'Ministers of State'
-
-elif income_total == 9:
-    wealth_rating = '19/20'
-    income_livres = '₶ 5,000,000s'
-    social_strata = 'Financiers'
-
-elif income_total == 8:
-    wealth_rating = '11/12'
-    income_livres = '₶ 1,000,000s'
-    social_strata = 'Princes & Dukes'
-
-elif income_total == 7:
-    wealth_rating = '9/10'
-    income_livres = '₶ 100,000s'
-    social_strata = 'Merchants'
-
-elif income_total == 6:
-    wealth_rating = '7/8'
-    income_livres = '₶ 10,000s'
-    social_strata = 'Marquis & Barons'
-
-elif income_total == 5:
-    wealth_rating = '5/6'
-    income_livres = '₶ 1000s'
-    social_strata = 'Artisans'
-
-elif income_total == 4:
-    wealth_rating = '4/6'
-    income_livres = '₶ 500s'
-    social_strata = 'Tradesmen'
-
-elif income_total == 3:
-    wealth_rating = '3/6'
-    income_livres = '₶ 200s'
-    social_strata = 'Peasants'
-
-elif income_total == 2:
-    wealth_rating = '2/6'
-    income_livres = '₶ 100s'
-    social_strata = 'Laborers'
-
-elif income_total == 1:
-    wealth_rating = '1/6'
-    income_livres = '₶ 10s'
-    social_strata = 'Beggars'
-
-else:
-    # income total == 0
-    wealth_rating = '0'
-    income_livres = '₶0'
-    social_strata = 'Hermits'
-'''
-
+income_total = str(income_results["income_total"])
+wealth_rating = str(income_results["wealth_rating"])
+income_livres = str(income_results["income_livres"])
+social_strata = str(income_results["social_srata"])
 
 #define another variable 
-lifestyle_choice = ""
-# this updates oblgations you get to choose this
+lifestyle_choice = "null life"
+# this updates obligations you get to choose this
 
-#############################################################################################################################################
-# User Input 
+#############################################################################################################################################            Lifestyle Choice 
+# User Input with a loop that requires input 0,1,2,3,4
 #############################################################################################################################################
 
 while True:
-    lifestyle_choice = input("How do you live your life, this will increase your oblgations but will later effect your reputation?\nChoose one, \n0)Natural \n1)Bread Alone Obligations +1 \n2)Respectable Obligations +2 \n3)Fashionable Obligations +3\n4)Lavish Oblgations +5\n\n")
+    lifestyle_choice = input("How do you live your life? This choice will add to your Obligations but will later affect your reputation.\nChoose one, \n0)Natural \n1)Bread Alone Obligations +1 \n2)Respectable Obligations +2 \n3)Fashionable Obligations +3\n4)Lavish Obligations +5\n\n")
     try:
         lifestyle_choice = int(lifestyle_choice)
     except:
@@ -317,19 +252,19 @@ while True:
         continue
     break
 
-if lifestyle_choice == '1':
+if lifestyle_choice == 1:
     lifestyle_choice ='Bread Alone'
     obligations = obligations + 1
 
-elif lifestyle_choice == '2':
+elif lifestyle_choice == 2:
     lifestyle_choice ='Respectable'
     obligations = obligations + 2
 
-elif lifestyle_choice == '3':
+elif lifestyle_choice == 3:
     lifestyle_choice ='Fashionable'
     obligations = obligations + 3
 
-elif lifestyle_choice == '4':
+elif lifestyle_choice == 4:
     lifestyle_choice ='Fashionable'
     obligations = obligations + 5
 
@@ -340,19 +275,20 @@ else:
 
 dependents = 0
 
-# roll 1d4-1 to have 0-3 dependants
+# roll 1d4-1 to have 0-3 dependents
 
 dependents = roll_d(4,1) -1
 
-# number of dependants modifies oblgations
+# number of dependents modifies obligations
 #a few new variables defined 
-dependants_all = []
-# you could have 0- 3 depedtants they will be stored
+dependents_all = []
+# you could have 0- 3 dependents they will be stored
 dependent_lifestyle_roll= 'none'
 
 dependent_lifestyle_choice='Natural'
 ##########################################################################################
-#Dependants require a complex nesting list
+#Dependents set up with a complex set of combinations, this allows combining relationships types by blood or in-law
+#  with dependent types from the list 
 ###########################################################################################
 
 
@@ -363,36 +299,40 @@ if dependents >= 1:
         relationship_sub=roll_d(6,1) -1 # minus one for indexing correctly
         relationship_table=['blood','blood','blood','in-law','in-law','filial or adopted']
         deps_add= str( (dependent_list[dependents_index])+" related to you by "+(relationship_table[relationship_sub]) )
-        dependants_all.append(deps_add)
+        dependents_all.append(deps_add)
         dependents_index +=1
 else:
-    dependants_all="no one, you lucky devil!"
+    dependents_all="no one, you lucky devil!"
 
-dependent_lifestyle_choice = "error dependants lifestyle"
+dependent_lifestyle_choice = "error dependents lifestyle"
 
 # random 2d6 or match your choice
-# adds to oblgation only once same for all depedants
-
+# adds to obligation only once same for all dependents
+# r or R is accepted to roll any other input results in matching dependant choice to your earlier selection 
 if dependents >= 1:
 
-    dependent_lifestyle_roll= input ("\nDo your dependants match your lifestyle? if you want them to be the same as you enter nothing\nIf you wantthe fates to determine their collective lifestyle, roll for it it, input R to roll \n")
+    dependent_lifestyle_roll= input ("\nDo your dependents match your lifestyle?\nIf you want them to be the same as you, simply press enter\nIf you want the fates to determine their collective lifestyle, roll for it. Input R to roll \n")
     if dependent_lifestyle_roll== "r" or dependent_lifestyle_roll== "R":
-        dependants_life_roll= roll_d(6,2) -1 #-1 for indexing again
+        dependents_life_roll= roll_d(6,2) -1 #-1 for indexing again
         dependent_lifestyle_list=['Natural','Natural','Bread Alone','Bread Alone','Bread Alone','Bread Alone','Bread Alone','Respectable','Respectable','Fashionable','Lavish','Lavish']
-        dependent_lifestyle_choice = dependent_lifestyle_list[int(dependants_life_roll)]
+        dependent_lifestyle_choice = dependent_lifestyle_list[int(dependents_life_roll)]
     else:
         dependent_lifestyle_choice = lifestyle_choice
-        
+
+#
+# error testing print("after choosing lifestyle_choice its ",lifestyle_choice)
+#
+print("after choosing depedneants lifestyle_choice yours is now ",lifestyle_choice)       
 
 debts_roll = roll_d(6,1)
-# roll 1d6  will modify oblgations,
+# roll 1d6  will modify obligations,
 debts = 'null error'# i added this value to test for an error
-weath_rating_debt = 0
+wealth_rating_debt = 0
 # if debts is 1 then roll 2d3 to calculate the one who owes you
 
 if debts_roll == 1:
     # You are owed money (value: 2d3 Wealth)
-    weath_rating_debt = roll_d(3,2)
+    wealth_rating_debt = roll_d(3,2)
     debts = 'You are debt free'
 
 elif  debts_roll == 2:
@@ -412,7 +352,8 @@ else:
     debts = 'You are debt free'
 
 total_obligations = obligations
-# Total Obligations
+# Total Obligations has been updated as we have rolled 
+#
 # Birth quality obligations (0-3) from Quality of Birth table
 # + property obligations (0-10) from Property table
 # + personal lifestyle (0-5)
@@ -422,19 +363,23 @@ total_obligations = obligations
 
 nationality = 'French, rating 1/6'
 # you are french but you might be american following the book
-relgion='null gods'
-relgion_roll = roll_d(6,2)
+
+#make a new variable so i can tell if something fails later 
+religion='null gods'
+religion_roll = roll_d(6,2)
+
 # 2d6 for gods
-if relgion_roll == 2 or relgion_roll == 3:
-    relgion = 'Lutheran, rating 1/6'
-elif relgion_roll == 4  or relgion_roll == 5 or relgion_roll == 6 or relgion_roll == 7:
-    relgion = 'Catholic, rating 1/6'
-elif relgion_roll == 8  or relgion_roll == 9 or relgion_roll == 10 or relgion_roll == 11:
-    relgion = 'Huguenot, rating 1/6'
+if religion_roll == 2 or religion_roll == 3:
+    religion = 'Lutheran, rating 1/6'
+elif religion_roll == 4  or religion_roll == 5 or religion_roll == 6 or religion_roll == 7:
+    religion = 'Catholic, rating 1/6'
+elif religion_roll == 8  or religion_roll == 9 or religion_roll == 10 or religion_roll == 11:
+    religion = 'Huguenot, rating 1/6'
 else:
     #12   
-    relgion = 'Jewish, rating 1/6'
-#more variables!
+    religion = 'Jewish, rating 1/6'
+
+#more variables, with unique names to i can test for issues
 political='null politic'
 # 2d6 for king or other
 political_roll = roll_d(6,2)
@@ -453,14 +398,14 @@ else:
     # roll must have been 12
     political='Politically ignorant, rating 1/6'
 
-#now re roll our basic stats this part should be familiar if youve played D&D
+#now re roll our basic stats this part should be familiar if you've played D&D
 # roll 3d6 
 Strength = roll_d(6,3)
 Intelligence = roll_d(6,3)
 Wisdom = roll_d(6,3)
 Dexterity = roll_d(6,3)
 Constitution = roll_d(6,3)
-Chrisma = roll_d(6,3)
+Charisma = roll_d(6,3)
 #no roll for language 
 language = 'French, rating 3/6'
 
@@ -472,38 +417,41 @@ print("\n\nYou were born to the caste of " + quality_birth)
 if quality_birth == 'Noblesse de robe: Minister, judge, intendant':
     print("Your Wealth comes from " + str(income_source) + " and " + str(income_source_2))
 else:
-    print("Your Wealth comes from " + str(income_source))
-print("Home for you is " + (property_type) + " which has an Asset Value of " + str(asset_value) + '\nWealth Rating is ' + wealth_rating + " and Income in Livres is " +
-      income_livres + "\nYour Social Strata, those you may be seen pressing hands with; " + social_strata +'\nYou chose to live in the ' + lifestyle_choice + " Lifestyle")
+    print("Your Wealth comes from " + income_source)
+print("Home for you is", property_type, 
+" which has an Asset Value of",  asset_value, 
+'\nWealth Rating is', wealth_rating,
+" and Income in Livres is", income_livres,
+"\nYour Social Strata, those you may be seen pressing hands with;", social_strata,
+"You chose to live in the", lifestyle_choice,"Lifestyle")
+
 if dependents == 0:
-    print ("Your Dependants include; " + str(dependants_all))
+    print ("Your Dependents include; " + dependents_all)
 else:
-    print ("Your Dependants include; " + str(dependants_all)[1:-1] + " and they live a " + str(dependent_lifestyle_choice ) +" lifestyle.")
-if weath_rating_debt != 0:
-    print ('and you are owed a debt, your debitor has a wealth rating of ' + str(weath_rating_debt))   
+    print ("Your Dependents include; " + str(dependents_all)[1:-1] + " and they live a " + str(dependent_lifestyle_choice ) +" lifestyle.")
+if wealth_rating_debt != 0:
+    print ('and you are owed a debt, your debtor has a wealth rating of ' + str(wealth_rating_debt))   
 else:
     print ("and " + debts)
-print("You have " + str(total_obligations) + " total Obligations"+ "\nYour Language is " + language +"\nYour Nationality is " + nationality + '\nYour Religious Affiliation is '+ str(relgion) +'\nYour Political Affiliation is ' + political +'\nSTATS \n'  + str(Strength) + '\tStrength \n' + str(Intelligence) + '\tIntelligence \n' + str(Wisdom) + '\tWisdom \n' + str(Dexterity) + '\tDexterity \n'+ str(Constitution) +'\tConstitution \n'+ str(Chrisma) + '\tChrisma \n')
+print("You have " + str(total_obligations) + " total Obligations"+ "\nYour Language is " + language +"\nYour Nationality is " + nationality + '\nYour Religious Affiliation is '+ str(religion) +'\nYour Political Affiliation is ' + political +'\nSTATS \n'  + str(Strength) + '\tStrength \n' + str(Intelligence) + '\tIntelligence \n' + str(Wisdom) + '\tWisdom \n' + str(Dexterity) + '\tDexterity \n'+ str(Constitution) +'\tConstitution \n'+ str(Charisma) + '\Charisma \n')
 
 #############################################################
-#output to file
+#output to file File I/O
 #############################################################
 with open('MyCharacter.txt', "w", encoding="utf-8") as f:
-    print("Below find all the details required to continue bulding your Miseries and Misfortunes character\n\nQuality of birth\t" + quality_birth, file=f)
+    print("Below find all the details required to continue building your Miseries and Misfortunes character\n\nQuality of birth\t",quality_birth, file=f)
     if quality_birth == 'Noblesse de robe: Minister, judge, intendant':
-        print("Wealth Income Source \t" + str(income_source) + " & " + str(income_source_2), file=f)
+        print("Wealth Income Source \t",str(income_source)," & ",str(income_source_2), file=f)
     else:
-        print("Wealth Income Source \t" + str(income_source), file=f)
-    print("Home \t" + (property_type) + "\tAsset Value\t" + str(asset_value) + '\nWealth Rating\t' + wealth_rating + "\nIncome in Livres\t" +
-        income_livres + "\nSocial Strata\t" + social_strata +'\nLifestyle\t' + lifestyle_choice, file=f)
+        print("Wealth Income Source \t",str(income_source), file=f)
+    print("Home \t", property_type, "\tAsset Value\t", str(asset_value), '\nWealth Rating\t', wealth_rating, "\nIncome in Livres\t",
+        income_livres, "\nSocial Strata\t", social_strata,'\nLifestyle\t', lifestyle_choice, file=f)
     if dependents == 0:
-        print ("Dependants"+"none", file=f)
+        print ("Dependents","none", file=f)
     else:
-        print ("Dependants\t" + str(dependants_all)[1:-1] + "\nDependants Lifestyle\t" + str(dependent_lifestyle_choice ), file=f)
-    if weath_rating_debt != 0:
-        print ('Debt Owed to you\t' + str(weath_rating_debt), file=f)   
+        print ("Dependents\t",str(dependents_all)[1:-1],"\nDependents Lifestyle\t",str(dependent_lifestyle_choice ), file=f)
+    if wealth_rating_debt != 0:
+        print ('Debt Owed to you\t',str(wealth_rating_debt), file=f)   
     else:
-        print ("Debt\t " + debts, file=f)
-    print("Obligations\t" + str(total_obligations) + "\nLanguage\t" + language +"\nNationality \t" + nationality + '\nReligious Affiliation\t'+ str(relgion) +'\nPolitical Affiliation \t' + political +'\nSTATS \n'  + str(Strength) + '\tStrength \n' + str(Intelligence) + '\tIntelligence \n' + str(Wisdom) + '\tWisdom \n' + str(Dexterity) + '\tDexterity \n'+ str(Constitution) +'\tConstitution \n'+ str(Chrisma) + '\tChrisma \n', file=f)
-    
-    
+        print ("Debt\t ",debts, file=f)
+    print("Obligations\t",str(total_obligations),"\nLanguage\t",language ,"\nNationality \t",nationality,'\nReligious Affiliation\t',str(religion) ,'\nPolitical Affiliation \t',political ,'\nSTATS \n' ,str(Strength),'\tStrength \n',str(Intelligence),'\tIntelligence \n',str(Wisdom),'\tWisdom \n',str(Dexterity),'\tDexterity \n',str(Constitution) ,'\tConstitution \n',str(Charisma),'\tCharisma \n', file=f)
