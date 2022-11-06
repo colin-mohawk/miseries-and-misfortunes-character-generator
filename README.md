@@ -17,11 +17,10 @@ python mAndM.py
     
 ## To Do
 -File I/O
-    -input from text file
-    -output to text file character details
+    -Done
 
 -User input
-    -more detail on whats going on while the script runs
+    -Done
 
 -GitHub Integration
     -Done
