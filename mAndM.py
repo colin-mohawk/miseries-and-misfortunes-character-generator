@@ -1,6 +1,7 @@
 # a character generator that rolls most of the random tables in character creation, for the game Miseries and Misfortunes by Luke Crane
 # generator by Colin Ferrie 2022 
 
+#we need to import the die roller
 from dieSideRoller import roll_d
 
 print("Bonjour, you are about to create a character for Miseries and Misfortunes RPG.\nYou should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your Friends)\nWe will roll some dice on the tables and provide you with the results\nThis covers the Birth and Wealth Section to the start of Determine Languages section.\nYou will continue with the book to complete character creation\nOnce you run this there will be a file MyCharacter.txt created, it will be replaced if you run this script again without copying it somewhere safe\n")
@@ -13,12 +14,16 @@ quality_birth = roll_d(6, 3)
 
 #roll 1 6 sided die for income sources
 income_source = (roll_d(6, 1))
-# type(income_source)
-# print (income_source)
 
 # income index is use to select our randomized income source based on the quality of birth roll
 # we need to reduce the result 1-6 to 0-5 to easily referenced in income list since our list starts at 0 
 income_index = (income_source) - 1
+
+##################################################################################################
+# Quality of Birth assigns:
+#           quality_Birth
+#           income_source[based on rolled index position] 
+##################################################################################################
 
 if quality_birth in [3, 4, 5]:
     obligations = obligations + 2
@@ -65,6 +70,7 @@ elif quality_birth == 18:
 else:
     # quality_birth == 17
     # this quality of birth has a special income source and possible second one we added income_source_2 to deal with it
+    #     income_source = income_list[income_index]    are in the if and elif statements because of this need for 2 values
     obligations = obligations + 2
     quality_birth = 'Noblesse de robe(Noble of the Robe): Minister, judge, intendant'
     income_list = ['None', 'None', 'None', 'None', 'Logeur', 'Benefice']
@@ -72,9 +78,13 @@ else:
     income_source_2 = income_list[income_index]
     income_range = 0
  
-# property_type = 0
+##################################################################################################
+# Income and Property, this assigns:
+#               income_range
+#               property_type - at the end of If statements
+##################################################################################################
+
 # roll 1d6 based on income_source
-######################################### This section deals with property types 
 property_type = roll_d(6, 1)
 
 if income_source == 'None':
@@ -125,13 +135,20 @@ else:
     income_range = roll_d(8, 1) + 2
     property_list = ['Townhouse', 'Townhouse', 'Townhouse', 'Manor', 'Manor', 'Estate']
 
+# 
 # convert the rolled value property_type to an index value starting at 0 thus the -1 again
 property_type = property_list[(property_type) - 1]
 
+##################################################################################################
+# Property details this section assigns:
+#               obligations 
+#               income_modifier 
+#               asset_value 
+#               
+#
+##################################################################################################
 
-##### property_details ######### 
 # we figure out the values of your property obligation changes and income modifiers based on property here 
-# create Income Modifier, and asset Value
 income_modifier = 0
 asset_value = 0
 
@@ -196,8 +213,8 @@ elif property_type == 'Castle':
 #income total is calculated by adding these values 
 income_total = income_range + income_modifier
 
-
 #to fix an issue with property type homeless providing a -1 as a result 
+# we created a copy of the income_total for the issue 
 income_true_total = income_total
 if income_total < 0:
     income_total = 0
@@ -209,9 +226,12 @@ income_livres = 0
 social_strata = "null Place"
 # based on wealth rating
 
-#########################this section resolves your wealth rating ####################################
+#############################################################
 # File I/O - file input 
-####################################
+#   
+#       
+#       
+##################################################################################################
 
 # we open income.txt to import values into a dictionary with nested dictionaries 
 with open('income.txt', encoding="utf-8") as f:
