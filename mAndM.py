@@ -199,9 +199,31 @@ income_livres = 0
 social_strata = 0
 # based on wealth rating
 
-#########################this section resolves your wealth rating income in Livres and scocial strata 
-# I might be able to implement File I/O here 
-#  
+#########################this section resolves your wealth rating ####################################
+# File I/O - file input 
+####################################
+
+# we open income.txt to import values into a dictonary with nested dictonarys 
+with open('income.txt', encoding="utf-8") as f:
+    income_dict={}
+    for line in f.readlines():
+        info = line.split(",")
+        income_tot = info[0]
+        wealth_rat = info[1]
+        income_liv = info[2]
+        social_str = info[3]
+
+        income_dict[income_tot] = {"income_total":income_tot, "wealth_rating":wealth_rat,"income_livres":income_liv,"social_srata":social_str}
+
+# now we are extracting the values calcuated from Income
+income_results = income_dict[str(income_total)]
+income_total = income_results["income_total"]
+wealth_rating = income_results["wealth_rating"]
+income_livres = income_results["income_livres"]
+social_srata = income_results["social_srata"]
+
+#pervious version 
+''' 
 if income_total == 13:
     wealth_rating = '99/100'
     income_livres = '₶ 1,000,000,000s'
@@ -272,6 +294,8 @@ else:
     wealth_rating = '0'
     income_livres = '₶0'
     social_strata = 'Hermits'
+'''
+
 
 #define another variable 
 lifestyle_choice = ""
