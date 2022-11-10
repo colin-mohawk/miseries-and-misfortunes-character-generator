@@ -35,5 +35,5 @@ python mAndM.py
 - follow the example of income to add flexibility to the script 
 - implement alternative output like partially filled character sheet
 - simplify code
-- add more roles
+- add more rolls expand parts of character creation 
 - research 
