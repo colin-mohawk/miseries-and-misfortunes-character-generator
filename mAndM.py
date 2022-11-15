@@ -4,7 +4,7 @@
 #we need to import the die roller
 from dieSideRoller import roll_d
 
-print("\n\n\nBonjour, you are about to create a character for Miseries and Misfortunes RPG.\nYou should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your Friends)\nWe will roll some dice on the tables and provide you with the results\nThis covers the Birth and Wealth Section to the start of Determine Languages section.\nYou will continue with the book to complete character creation\nOnce you run this there will be a file MyCharacter.txt created, it will be replaced if you run this script again without copying it somewhere safe\n")
+print("\n\n\nBonjour, you are about to create a character for Miseries and Misfortunes RPG, Roleplaying in 1648 France.\nYou should have on hand Miseries & Misfortunes Book 2: Les Fruits Malheureux. \nFollowing the book, Motif should already be established avec tes amis(with your Friends)\nWe will roll some dice on the tables and provide you with the results\nThis covers the Birth and Wealth Section to the start of Determine Languages section.\nYou will continue with the book to complete character creation\nOnce you run this there will be a file MyCharacter.txt created,\nit will be replaced if you run this script again without copying it somewhere safe\n")
 
 #obligations are a game stat and we define a value of 0 for now since thats where you start 
 obligations = 0
@@ -206,19 +206,6 @@ elif property_type == 'Castle':
     income_modifier = income_modifier + int(1)
     asset_value = roll_d(10, 1)
 
-
-
-#income total is calculated by adding these values 
-income_total = income_range + income_modifier
-
-#to fix an issue with property type homeless providing a -1 as a result 
-# we created a copy of the income_total for the issue 
-income_true_total = income_total
-if income_total < 0:
-    income_total = 0
-
-
-
 ##################################################################################################
 # File I/O - file input
 ################################################################################################## 
@@ -230,6 +217,16 @@ if income_total < 0:
 #               social_strata
 #       
 ##################################################################################################
+
+#income total is calculated by adding these values 
+income_total = income_range + income_modifier
+
+#to fix an issue with property type homeless providing a -1 as a result 
+# we created a copy of the income_total for the issue 
+income_true_total = income_total
+if income_total < 0:
+    income_total = 0
+
 #define a few more values
 wealth_rating = 0
 # wealth_rating= some value from chart
@@ -333,13 +330,15 @@ if dependents >= 1:
 else:
     dependents_all="no one, you lucky devil!"
 
+#the next section checks if you have any dependents, if you dont it will be skipped ####
+
 # random 2d6 or match your choice
 # adds to obligation only once same for all dependents
 # r or R is accepted to roll any other input results in matching dependant choice to your earlier selection 
 if dependents >= 1:
 
     dependent_lifestyle_roll= input ("\nDo your dependents match your lifestyle?\nIf you want them to be the same as you, simply press enter\nIf you want the fates to determine their collective lifestyle, roll for it. Input R to roll \n")
-    if dependent_lifestyle_roll is "r" or dependent_lifestyle_roll is "R":
+    if dependent_lifestyle_roll == "r" or dependent_lifestyle_roll == "R":
         dependents_life_roll= roll_d(6,2) -1 #-1 for indexing again
         dependent_lifestyle_list=['Natural','Natural','Bread Alone','Bread Alone','Bread Alone','Bread Alone','Bread Alone','Respectable','Respectable','Fashionable','Lavish','Lavish']
 #test results as bread alone keeps comming up        dependent_lifestyle_list=['Natural0','Natural1','Bread Alone2','Bread Alone3','Bread Alone4','Bread Alone5','Bread Alone6','Respectable7','Respectable8','Fashionable9','Lavish10','Lavish11']
