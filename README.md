@@ -20,7 +20,7 @@ it will also create a file locally called mycharacter.txt with the results
 
 
 
-## Example
+## Sample Output
 
 
 
